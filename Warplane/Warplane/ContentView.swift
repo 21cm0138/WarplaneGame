@@ -17,7 +17,7 @@ struct ContentView: View {
     @State var warplane = WarplaneModel()
     
     
-    @State private var collimatorLocation = (x:0.0,y:0.0)
+    @State private var collimatorLocation = (x:-100.0,y:-100.0)
     
     @State private var enemyPosition = (x:0.0,y:0.0,z:0)
     @State private var warplanePosition = (x:0.0,y:0.0,z:0.0)
@@ -77,9 +77,9 @@ struct ContentView: View {
                 }
                 
                 SpeedView(speed: $speed)
-                    .position(x: screenWidth / 2 + 152 , y: screenHeight / 2 + 10) //10系数
+                    .position(x: screenWidth / 2 + 152 , y: collimatorLocation.y) //10系数
                 HightView()
-                    .position(x: screenWidth / 2 - 152 , y: screenHeight / 2 - 22)
+                    .position(x: screenWidth / 2 - 152 , y: collimatorLocation.y)
                     
                     
                 FacePlateView()//面板
@@ -258,9 +258,8 @@ struct ContentView: View {
                         
                         missileLocation.x = screenWidth / 2
                         missileLocation.y = screenHeight / 2
-                        
                         isShooting = true
-                        
+                        countMissileLocation()
 
                     }label: {
                         Text("Shoot")
@@ -301,9 +300,9 @@ struct ContentView: View {
                 
             }
             speed = warplane.speed
-            print("速度变化量：")
-            print((collimatorLocation.x - screenWidth / 2)*3.1)
-            print(warplane.speed)
+//            print("速度变化量：")
+//            print((collimatorLocation.x - screenWidth / 2)*3.1)
+//            print(warplane.speed)
             
             
             
@@ -357,6 +356,55 @@ struct ContentView: View {
             }
             
         }
+    }
+    
+    func countMissileLocation() {
+
+
+        
+        timerHandler = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            print("count Missile")
+            //print("go")
+            let distance_x = enemyLocation.x - missileLocation.x
+            let distance_y = enemyLocation.y - missileLocation.y
+            
+           let distance =  sqrt(distance_x * distance_x + distance_y + distance_y)
+                  print("distance = \(distance)")
+            
+            let speed_x = distance_x / distance * 2
+            let speed_y = distance_y / distance * 2
+            print("speed x = \(speed_x) y = \(speed_y)")
+            
+            if( distance_x > 0){
+                missileLocation.x -= speed_x
+            }else if(distance_x == 0){
+                missileLocation.x += 0
+            }else if(distance_x < 0){
+                missileLocation.x += speed_x
+            }
+            
+            if( distance_y > 0){
+                missileLocation.y -= speed_y
+            }else if(distance_y == 0){
+                missileLocation.y += 0
+            }else if(distance_y < 0){
+                missileLocation.y += speed_y
+            }
+            
+            if( (distance_x <= 10 && distance_x >= -10) && (distance_y <= 10 && distance_y >= -10) ){
+                print("get------------>")
+                timerHandler?.invalidate()//停止计时器
+                //isShowEnermy = false
+                
+                isShooting = false
+                
+
+            }
+            
+            
+        }
+        
+
     }
     
 }

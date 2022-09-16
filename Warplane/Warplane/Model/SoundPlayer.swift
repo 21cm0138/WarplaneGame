@@ -16,9 +16,6 @@ class SoundPlayer: NSObject {
     let sound_go = NSDataAsset(name: "Sound_go")!.data //调取数据文件
     let sound_engine = NSDataAsset(name: "Sound_engine")!.data //调取数据文件
     
-    
-    
-    
     var soundPlayer: AVAudioPlayer!
     var soundPlayer2: AVAudioPlayer!
     var soundPlayer3: AVAudioPlayer!

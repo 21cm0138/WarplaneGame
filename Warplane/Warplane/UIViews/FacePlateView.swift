@@ -11,12 +11,27 @@ struct FacePlateView: View {
     private let screenWidth = UIScreen.main.bounds.width
     private  let screenHeight = UIScreen.main.bounds.height
     var body: some View {
-        VStack{
+        ZStack{
+//            Image("road")
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .position(x: 30, y: 2)
+//                .frame(width: 60, height: 25, alignment: .center)
+            
+//            Image("points")
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .position(x: 80, y: 25)
+//                .frame(width: 160, height: 25, alignment: .center)
 
-            Image("Plane")
+
+            Image("Plane2")
                 .resizable()
-                .frame(width: 110, height: 38.5, alignment: .center)
+                .aspectRatio(contentMode: .fill)
+                .position(x: 55, y: 9)
+                .frame(width: 110, height: 25, alignment: .center)
                 
+            
         }
         .frame(width: screenWidth, height: screenHeight, alignment: .center)
     }
